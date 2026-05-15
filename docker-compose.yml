@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:16-alpine
+    container_name: notes-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-notesuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-notespassword}
+      POSTGRES_DB: ${DB_NAME:-notesdb}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-notesuser}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - notes-network
+
+  # Notes Application Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notes-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-notesdb}
+      DB_USER: ${DB_USER:-notesuser}
+      DB_PASSWORD: ${DB_PASSWORD:-notespassword}
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-this-in-production-min-256-bits}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-900}
+      REFRESH_TOKEN_EXPIRATION: ${REFRESH_TOKEN_EXPIRATION:-604800}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      JAVA_OPTS: "-XX:+EnablePreviewFeatures"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - notes-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  notes-network:
+    driver: bridge
