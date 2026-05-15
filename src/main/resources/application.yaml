@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: notes-app
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/notes_db}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:password}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+  threads:
+    virtual:
+      enabled: true
+  cache:
+    type: caffeine
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: true
+    time-zone: UTC
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-ttl: PT15M
+    refresh-token-ttl: P7D
+  cache:
+    notes-ttl: PT5M
+    user-notes-page-ttl: PT1M
+  rate-limit:
+    auth-rpm: 5
+    api-rpm: 100
+
+springdoc:
+  api-docs:
+    path: /openapi.json
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  show-actuator: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: INFO
+    com.backend.notes: DEBUG
+    org.springframework.security: INFO
