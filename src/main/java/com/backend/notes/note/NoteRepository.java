@@ -59,30 +59,36 @@ public interface NoteRepository extends JpaRepository<Note, UUID> {
             Pageable pageable);
 
     @Query("""
-            SELECT n FROM Note n
-            WHERE n.owner.id = :userId
-            AND (n.id = :noteId OR EXISTS (
+        SELECT n FROM Note n
+        WHERE n.id = :noteId
+        AND n.deletedAt IS NULL
+        AND (
+            n.owner.id = :userId
+            OR EXISTS (
                 SELECT 1 FROM NoteShare ns
                 WHERE ns.id.noteId = n.id
                 AND ns.id.sharedWithUserId = :userId
-            ))
-            AND n.deletedAt IS NULL
-            """)
+            )
+        )
+        """)
     Optional<Note> findByIdAndAccessibleByUser(
             @Param("noteId") UUID noteId,
             @Param("userId") UUID userId);
 
     @Query("""
-            SELECT n FROM Note n
-            WHERE n.owner.id = :userId
-            AND (n.id = :noteId OR EXISTS (
+        SELECT n FROM Note n
+        WHERE n.id = :noteId
+        AND n.deletedAt IS NULL
+        AND (
+            n.owner.id = :userId
+            OR EXISTS (
                 SELECT 1 FROM NoteShare ns
                 WHERE ns.id.noteId = n.id
                 AND ns.id.sharedWithUserId = :userId
-                AND (ns.permission = 'WRITE' OR n.owner.id = :userId)
-            ))
-            AND n.deletedAt IS NULL
-            """)
+                AND ns.permission = com.backend.notes.note.SharePermission.WRITE
+            )
+        )
+        """)
     Optional<Note> findByIdAndEditableByUser(
             @Param("noteId") UUID noteId,
             @Param("userId") UUID userId);
