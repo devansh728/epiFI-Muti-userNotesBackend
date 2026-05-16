@@ -1,6 +1,6 @@
 # Notes App Backend
 
-A production-ready multi-user notes service built with Spring Boot 4.0.6, Java 21, and PostgreSQL.
+A production-ready multi-user notes service built with Spring Boot 3.5.0, Java 21, and PostgreSQL.
 
 ## Features
 
@@ -17,7 +17,7 @@ A production-ready multi-user notes service built with Spring Boot 4.0.6, Java 2
 
 ## Technology Stack
 
-- **Framework**: Spring Boot 4.0.6
+- **Framework**: Spring Boot 3.0.5
 - **Language**: Java 21 (with virtual threads)
 - **Database**: PostgreSQL 16 (with Flyway migrations)
 - **Security**: Spring Security 7, JWT (jjwt 0.12), BCrypt (strength 12)
@@ -25,6 +25,34 @@ A production-ready multi-user notes service built with Spring Boot 4.0.6, Java 2
 - **Rate Limiting**: Bucket4j
 - **API Docs**: springdoc-openapi 2.6+
 - **Mapping**: MapStruct
-- **Testing**: JUnit 5, Testcontainers, RestAssured
+- **Testing**: JUnit 5, Testcontainers, RestAssured, Postman
 - **Deployment**: Docker, Docker Compose, Render.com
+- **Development Tool**: VS Code, Github Copilot(Claude, GPT4)
+
+## Api_doc_link
+
+- BASE_URL=http://localhost:8080 / render-deployed-domain
+
+- open-api.json : {BASE_URL}/v3/api-docs
+- swagger-ui.html : {BASE_URL}/swagger-ui.html
+- about : {BASE_URL}/about
+
+## Smart Feature
+
+### There is two smart feature, which i developed:
+
+[Click here to see the Documentation](SMART_FEATURE.md)
+
+## API_DOCUMENTATION
+
+[Click here to see the Documentation](API_DOCUMENTATION.md)
+
+## Database Schema Design
+
+[Click here to see the Documentation](DATABASE_DESIGN.md)
+
+
+## System Architecture
+
+[Click here to see the Documentation](SYSTEM_DESIGN.md)
 
