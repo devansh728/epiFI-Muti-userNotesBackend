@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/notes_db}
     username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:password}
+    password: ${DATABASE_PASSWORD:postgres}
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -37,7 +37,7 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: ${JWT_SECRET:CFP4jZM2oQqbQUoyiWwflMTGV8VPVYM3nL5pyCnXejk}
     access-token-ttl: PT15M
     refresh-token-ttl: P7D
   cache:
@@ -49,7 +49,7 @@ app:
 
 springdoc:
   api-docs:
-    path: /openapi.json
+    path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
