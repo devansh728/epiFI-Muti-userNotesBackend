@@ -5,7 +5,7 @@ COPY mvnw .
 COPY mvnw.cmd .
 COPY .mvn .mvn
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 # Stage 2: Runtime with JDK 21 Alpine
 FROM eclipse-temurin:21-jdk-alpine
