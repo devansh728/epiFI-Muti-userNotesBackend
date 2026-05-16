@@ -13,8 +13,8 @@ import java.util.UUID;
 @Repository
 public interface NoteVersionRepository extends JpaRepository<NoteVersion, UUID> {
     
-    @Query("SELECT nv FROM NoteVersion nv WHERE nv.note.id = :noteId ORDER BY nv.editedAt DESC")
-    Page<NoteVersion> findByNoteIdOrderByEditedAtDesc(
+    @Query("SELECT nv FROM NoteVersion nv WHERE nv.note.id = :noteId ORDER BY nv.editedAt ASC")
+    Page<NoteVersion> findByNoteIdOrderByEditedAtAsc(
         @Param("noteId") UUID noteId, 
         Pageable pageable);
     

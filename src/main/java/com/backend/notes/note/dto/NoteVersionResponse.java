@@ -32,4 +32,10 @@ public class NoteVersionResponse {
     
     @Schema(description = "When this version was created", example = "2026-05-15T14:20:00Z")
     private OffsetDateTime editedAt;
+
+    @Schema(description = "Version number (incremental)", example = "3")
+    private Integer versionNumber;
+
+    @Schema(description = "Note unique identifier", example = "550e8400-e29b-41d4-a716-446655440000")
+    private UUID noteId;
 }
