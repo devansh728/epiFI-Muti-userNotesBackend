@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.6</version>
+		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.backend</groupId>
@@ -15,11 +15,10 @@
 	<description>Multi-user Notes Backend with JWT Auth, Sharing, and Full-Text Search</description>
 	<properties>
 		<java.version>21</java.version>
-		<springdoc-openapi.version>2.6.0</springdoc-openapi.version>
+		<springdoc-openapi.version>2.8.5</springdoc-openapi.version>
 		<jjwt.version>0.12.3</jjwt.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<bucket4j.version>7.6.0</bucket4j.version>
-		<testcontainers.version>1.19.8</testcontainers.version>
 		<rest-assured.version>5.4.0</rest-assured.version>
 	</properties>
 	<dependencies>
@@ -46,10 +45,15 @@
 		</dependency>
 
 		<!-- Database & Migrations -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-flyway</artifactId>
+		</dependency> -->
+		<dependency>
+    		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-core</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-database-postgresql</artifactId>
@@ -119,11 +123,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test-autoconfigure</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -137,19 +141,16 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
-			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
